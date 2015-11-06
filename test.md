@@ -1,6 +1,6 @@
 ---
-layout: page
 title: Does it work
+layout: page
 ---
 
 Just curious. Does this work.
