@@ -9,11 +9,10 @@
 html {
   font-family: sans-serif; /* 1 */
   -webkit-text-size-adjust: 100%; /* 2 */
-/*  -ms-text-size-adjust: 100%;  2 */
-  -ms-text-size-adjust: 300%; /* 2 */
-  
-}
+  -ms-text-size-adjust: 100%;  /* 2 */
 
+}
+ 
 /**
  * Remove default margin.
  */
@@ -89,7 +88,7 @@ template {
  */
 
 a {
-  background-color: transparent;
+  background-color: #ff00ff; /* transparent;*/
 }
 
 /**
