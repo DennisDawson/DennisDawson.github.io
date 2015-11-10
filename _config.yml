@@ -1,28 +1,3 @@
-# Site settings
-title: RecordService
-email: rs-team@cloudera.org
-description: "An abstraction layer between storage managers (for example, HDFS, HBase, Kudu) and compute frameworks (for example, MapReduce, Spark, Hive)."
-url: "http://github.mtv.cloudera.com/CDH/RecordServiceClient"
-
-license_url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-github_url: "https://github.com/cloudera/RecordServiceClient"
-issue_tracker_url: "https://jira.cloudera.com/browse/CDH/component/12921/"
-mailing_list_url: "https://groups.google.com/forum/#!forum/recordservice-user"
-contributing_url: "http://github.com/cloudera/RecordServiceClient/"
-examples_url: "https://github.com/cloudera/RecordServiceClient/tree/master/java/examples"
-
-# version-specific
-baseurl: "/RecordServiceClient"
-version: "Beta"
-javadoc_url: "/docs/apidocs/index.html"
-jdiff_url: "/docs/jdiff/changes.html"
-
-# Build settings
-include: ["./samples/"]
-markdown: kramdown 
-
-kramdown:
-  input: GFM
-  coderay_line_numbers: table
-  
-
+name: Architect Theme
+markdown: redcarpet
+baseurl: '/jekyll-architect-theme'
