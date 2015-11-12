@@ -1,6 +1,6 @@
 ---
 layout: default
-title: RecordServer
+title: RecordService
 ---
 
 <div id="home">
@@ -13,5 +13,5 @@ title: RecordServer
 </div>
 <div>
   <h1>More Stuff</h1>
-  <p>test</p>
+  <p>And so I dreamed a dream of dreams and dreamt I dreamt again.</p>
 </div>
