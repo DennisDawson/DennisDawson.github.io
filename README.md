@@ -1,40 +1,18 @@
-# Architect theme
+# Skinny Bones Jekyll Starter
 
-This is a [Jekyll][1] theme that is an adaptation of [@jasonlong][2]'s [Architect theme][4] on [GitHub Pages][3].
+Just a little something I'm using to jump start a site refresh. I like to think of it as a starter for building your own Jekyll site. I purposely keep the styling minimal and bare to make it easier to add your own flare and markup.
 
-This is the raw HTML and styles that are used for the *Architect* theme on [GitHub Pages](http://pages.github.com/).
+**Jekyll 3 Update:** A version of Skinny Bones compatible with Jekyll 3 can be found in the [`jekyll3` branch](https://github.com/mmistakes/skinny-bones-jekyll/tree/jekyll3). GitHub Pages is [locked at version 2.4](https://pages.github.com/versions/) so some keep that in mind if you're trying to use 3.0 features that aren't supported there yet.
 
-![](http://cl.ly/image/1x0Q3213330G/content)
+I'm currently using a variation of it on my personal website [Made Mistakes](http://mademistakes.com) with some modifications. To learn more about how to use the theme and install it check out the [Skinny Bones demo](http://mmistakes.github.io/skinny-bones-jekyll/) (*work in progress*).
 
-# How to use it?
+![screenshot of Skinny Bones](http://mmistakes.github.io/skinny-bones-jekyll/images/skinny-bones-theme-feature.jpg)
 
-Install Jekyll in your system
+---
 
-```
-$ gem install jekyll # use sudo if your system requires it
-```
+## Notable Features
 
-Download the theme @ http://github.com/pietromenna/jekyll-architect-theme/archive/master.zip
-
-Unzip it and use it as a regular jekyll folder.
-
-```
-$ unzip master.zip
-```
-
-Use it!
-
-```
-$ jekyll serve
-```
-
-For more details read about [Jekyll][1] on its web page.
-
-# License
-
-This work is licensed under a [Creative Commons Attribution 4.0 International](http://creativecommons.org/licenses/by/4.0/).
-
-[1]: http://jekyllrb.com
-[2]: https://github.com/jasonlong
-[3]: http://pages.github.com/
-[4]: http://github.com/jasonlong/architect-theme
+* Stylesheet built using Sass. *Requires Jekyll 2.x*
+* Data files for easier customization of the site navigation/footer and for supporting multiple authors.
+* Optional Disqus comments, table of contents, social sharing links, and Google AdSense ads.
+* And more.
