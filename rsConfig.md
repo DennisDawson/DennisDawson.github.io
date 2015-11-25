@@ -8,7 +8,35 @@ share: false
 
 ## Client Configurations
 
-While it should not be necessary to change the default configuration, you have the option of modifying any of these settings.
+While it should not be necessary to change the default configuration, you have the option modifying RecordService properties.
+
+To change any of the setting listed below:
+
+<ol>
+<li>In Cloudera Manager, navigate to the RecordService configuration page.
+</li>
+<li>
+Search for <code>Safety Valve</code>.
+</li>
+<li>In the search results, look for <b>RecordService (Beta) Client Advanced Configuration Snippet (Safety Valve) for recordservice-conf/recordservice-site.xml</b>. 
+</li>
+<li> Add or change the value in the field provided. For example, to change <code>recordservice.task.fetch.size</code> to <code>1000</code>, add the following code:
+<br/><pre>
+&lt;property>
+  &lt;name>recordservice.task.fetch.size&lt;/name>
+  &lt;value>1000&lt;/value>
+&lt;/property>
+</pre>
+</li>
+<li>Click <b>Save Changes</b>.
+</li>
+<li>From the <b>Actions</b> menu, choose <b>Deploy Client Configuration</b>.
+</li>
+</ol>
+
+For more information, see <a href="http://www.cloudera.com/content/www/en-us/documentation/enterprise/latest/topics/cm_mc_mod_configs.html">Modifying Configuration Properties Using Cloudera Manager</a>.
+
+These are the configuration settings you can (optionally) adjust in your RecordService instance.
 
 <table border="1">    
 <tr><th>CATEGORY</th><th>PARAMETER</th><th>DESCRIPTION</th><th> DEFAULT VALUE </th></tr>
