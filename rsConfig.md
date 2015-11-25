@@ -74,7 +74,7 @@ See [http://www.cloudera.com/content/cloudera/en/documentation/core/latest/topic
 <li>Save changes.</li>
 <li>Enable Sentry for RecordService.
     <ul>
-    <li>In Cloudera Manager, navigate to **RecordService Configuration**.</li>
+    <li>In Cloudera Manager, navigate to <b>RecordService Configuration</b>.</li>
     <li>Select the <b>Sentry-1</b> service.</li>
     <li>In the <b>Configuration Snippet (Safety Valve) for sentry-site.xml</b> field, enter the following settings.</li>
     </ul>
