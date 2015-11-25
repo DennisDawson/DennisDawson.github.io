@@ -64,20 +64,53 @@ See [http://www.cloudera.com/content/cloudera/en/documentation/core/latest/topic
 
 #### Configure Sentry with RecordService
 
-1. Enable RecordService to read policy metadata from Sentry:
-    * In Cloudera Manager, navigate to the **Sentry Configuration** page.
-    * In **Admin Groups**, add the user *recordservice*.
-    * In **Allowed Connecting Users**, add the user *recordservice*.
-1. Save changes.
-1. Download the Cloudera Manager generated `sentry-site.xml` configuration file (same config as HiveServer2)
-    * In Cloudera Manager, navigate to **Hive** -> **HiveServer2** -> **Processes** -> `sentry-site.xml`
-1. Deploy configurations to cluster: copy `sentry-site.xml` to the `/etc/sentry/conf/` directory on all nodes running RecordService Planner or RecordService Planner and Worker. Nodes that are only running only the RecordService Worker role do not need this configuration option.
-1. Enable Sentry for RecordService
-    * In Cloudera Manager, navigate to **RecordService Configuration**.
-    * Select the **Sentry** service.
-    * In the **Sentry Configuration File** field, enter `/etc/sentry/conf/sentry-site.xml.
-1. Save changes.
-1. Restart the Sentry and RecordService services. 
+<ol>
+<li>Enable RecordService to read policy metadata from Sentry:
+    <ul>
+    <li>In Cloudera Manager, navigate to the <b>Sentry Configuration</b> page.</li>
+    <li>In <b>Admin Groups</b>, add the user <i>recordservice</i>.</li>
+    <li>In <b>Allowed Connecting Users</b>, add the user <i>recordservice</i>.</li>
+    </ul></li>
+<li>Save changes.</li>
+<li>Enable Sentry for RecordService.
+    <ul>
+    <li>In Cloudera Manager, navigate to **RecordService Configuration**.</li>
+    <li>Select the <b>Sentry-1</b> service.</li>
+    <li>In the <b>Configuration Snippet (Safety Valve) for sentry-site.xml</b> field, enter the following settings.</li>
+    </ul>
+
+
+<pre>
+&lt;property&gt;
+    &lt;name&gt;sentry.service.server.principal&lt;/name&gt;
+    &lt;value&gt;sentry/_HOST@principal&lt;/value&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
+    &lt;name&gt;sentry.service.security.mode&lt;/name&gt;
+    &lt;value&gt;kerberos&lt;/value&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
+    &lt;name&gt;sentry.service.client.server.rpc-address&lt;/name&gt;
+    &lt;value&gt;hostname&lt;/value&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
+    &lt;name&gt;sentry.service.client.server.rpc-port&lt;/name&gt;
+    &lt;value&gt;portnum&lt;/value&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
+    &lt;name&gt;hive.sentry.server&lt;/name&gt;
+    &lt;value&gt;server1&lt;/value&gt;
+&lt;/property&gt;
+</pre>
+
+</li>
+<li>Save changes.</li>
+<li>Restart the Sentry and RecordService services.</li>
+</ol>
 
 ### Delegation Token Configuration
 

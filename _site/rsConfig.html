@@ -219,29 +219,51 @@ Note: This might need to be adjusted according to the type of workloads (MR, Spa
 <h4 id="configure-sentry-with-recordservice">Configure Sentry with RecordService</h4>
 
 <ol>
-  <li>Enable RecordService to read policy metadata from Sentry:
+<li>Enable RecordService to read policy metadata from Sentry:
     <ul>
-      <li>In Cloudera Manager, navigate to the <strong>Sentry Configuration</strong> page.</li>
-      <li>In <strong>Admin Groups</strong>, add the user <em>recordservice</em>.</li>
-      <li>In <strong>Allowed Connecting Users</strong>, add the user <em>recordservice</em>.</li>
-    </ul>
-  </li>
-  <li>Save changes.</li>
-  <li>Download the Cloudera Manager generated <code>sentry-site.xml</code> configuration file (same config as HiveServer2)
+    <li>In Cloudera Manager, navigate to the <b>Sentry Configuration</b> page.</li>
+    <li>In <b>Admin Groups</b>, add the user <i>recordservice</i>.</li>
+    <li>In <b>Allowed Connecting Users</b>, add the user <i>recordservice</i>.</li>
+    </ul></li>
+<li>Save changes.</li>
+<li>Enable Sentry for RecordService.
     <ul>
-      <li>In Cloudera Manager, navigate to <strong>Hive</strong> -&gt; <strong>HiveServer2</strong> -&gt; <strong>Processes</strong> -&gt; <code>sentry-site.xml</code></li>
+    <li>In Cloudera Manager, navigate to **RecordService Configuration**.</li>
+    <li>Select the <b>Sentry-1</b> service.</li>
+    <li>In the <b>Configuration Snippet (Safety Valve) for sentry-site.xml</b> field, enter the following settings.</li>
     </ul>
-  </li>
-  <li>Deploy configurations to cluster: copy <code>sentry-site.xml</code> to the <code>/etc/sentry/conf/</code> directory on all nodes running RecordService Planner or RecordService Planner and Worker. Nodes that are only running only the RecordService Worker role do not need this configuration option.</li>
-  <li>Enable Sentry for RecordService
-    <ul>
-      <li>In Cloudera Manager, navigate to <strong>RecordService Configuration</strong>.</li>
-      <li>Select the <strong>Sentry</strong> service.</li>
-      <li>In the <strong>Sentry Configuration File</strong> field, enter `/etc/sentry/conf/sentry-site.xml.</li>
-    </ul>
-  </li>
-  <li>Save changes.</li>
-  <li>Restart the Sentry and RecordService services.</li>
+
+
+<pre>
+&lt;property&gt;
+    &lt;name&gt;sentry.service.server.principal&lt;/name&gt;
+    &lt;value&gt;sentry/_HOST@principal&lt;/value&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
+    &lt;name&gt;sentry.service.security.mode&lt;/name&gt;
+    &lt;value&gt;kerberos&lt;/value&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
+    &lt;name&gt;sentry.service.client.server.rpc-address&lt;/name&gt;
+    &lt;value&gt;hostname&lt;/value&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
+    &lt;name&gt;sentry.service.client.server.rpc-port&lt;/name&gt;
+    &lt;value&gt;portnum&lt;/value&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
+    &lt;name&gt;hive.sentry.server&lt;/name&gt;
+    &lt;value&gt;server1&lt;/value&gt;
+&lt;/property&gt;
+</pre>
+
+</li>
+<li>Save changes.</li>
+<li>Restart the Sentry and RecordService services.</li>
 </ol>
 
 <h3 id="delegation-token-configuration">Delegation Token Configuration</h3>
