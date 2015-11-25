@@ -2,7 +2,7 @@
 layout: article
 title: ''
 image:
-  feature: rs_banner3.png
+  feature: rs_banner.png
 category: install
 share: false
 ---
