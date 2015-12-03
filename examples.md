@@ -118,4 +118,42 @@ Query: select * from tpch.nation</pre></td></tr></table>
 <pre>[quickstart.cloudera:21000] > CREATE ROLE demorole;
 [quickstart.cloudera:21000] > GRANT ROLE demorole to GROUP demogroup;
 [quickstart.cloudera:21000] > CREATE VIEW nation_names AS SELECT n_nationkey, n_name FROM tpch.nation;
-[quickstart.cloudera:21000] > GRANT SELECT ON TABLE tpch.nation_names TO ROLE demorole;</pre>
+[quickstart.cloudera:21000] > GRANT SELECT ON TABLE tpch.nation_names TO ROLE demorole;
+</pre>
+
+* Re-run the query using the nation_names view.
+
+<pre>
+[quickstart.cloudera:21000] > select * from tpch.nation_names;
+Query: select * from tpch.nation_names
++-------------+----------------+
+| n_nationkey | n_name         |
++-------------+----------------+
+| 0           | ALGERIA        |
+| 1           | ARGENTINA      |
+| 2           | BRAZIL         |
+| 3           | CANADA         |
+| 4           | EGYPT          |
+| 5           | ETHIOPIA       |
+| 6           | FRANCE         |
+| 7           | GERMANY        |
+| 8           | INDIA          |
+| 9           | INDONESIA      |
+| 10          | IRAN           |
+| 11          | IRAQ           |
+| 12          | JAPAN          |
+| 13          | JORDAN         |
+| 14          | KENYA          |
+| 15          | MOROCCO        |
+| 16          | MOZAMBIQUE     |
+| 17          | PERU           |
+| 18          | CHINA          |
+| 19          | ROMANIA        |
+| 20          | SAUDI ARABIA   |
+| 21          | VIETNAM        |
+| 22          | RUSSIA         |
+| 23          | UNITED KINGDOM |
+| 24          | UNITED STATES  |
++-------------+----------------+
+Fetched 25 row(s) in 0.36s
+</pre>
