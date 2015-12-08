@@ -43,16 +43,18 @@ The following examples can be found at [https://github.com/cloudera/RecordServic
 
 RecordService provides column-level security. You can create a view that restricts users in a group to a subset of columns in a dataset. This allows you to maintain a single, secure dataset that can be viewed and updated by users with specific access rights to only the columns they need.
 
-For example, this schema describes a table that stores information about nations.
+For example, this schema describes a table that stores information about employees.
 
 | column_name | column_type|
 |---|---|
-| n_nationkey | smallint |
-| n_name | string |
-| n_regionkey | smallint |
-| n_comment | string |
+| firstname | string |
+| lastname | string |
+| position | string |
+| department | string |
+| salary | long |
+| phone | long |
 
-Suppose you have a group of employees who are tasked with editing the nation key and name, but do not need to see the region key and are not supposed to read the comments. You can create a view that allows those employees to see only the two columns you want them to see, without providing access to the others.
+Suppose you want your employees to have access to the names and phone numbers, but not the position or salary info. You can create a view that allows users to see only the columns you want them to see.
 
 To assign access with column-level restrictions, you create a role, assign the role to a group, create a view with the columns the group can access, and then assign the view to the role.
 
@@ -72,88 +74,214 @@ sudo service sentry-store restart
 * Add the current user to the group:
 `sudo usermod -a -G demogroup $USER`
 
-* Currently, you have access to the entire table. Use Impala to select all records from the `tpch.nation` table:
-<table><tr><td style="background-color: #F0F0F0;"><pre>
-sudo -u $USER impala-shell
-[quickstart.cloudera:21000] > set use_record_service=true;
-[quickstart.cloudera:21000] > USE tpch;
-[quickstart.cloudera:21000] > SELECT * from tpch.nation;
-Query: select * from tpch.nation</pre></td></tr></table>
+* Currently, you have access to the entire table. Use Impala to select all records from the `rs.employees` table:
 
 <pre>
-+-------------+----------------+-------------+--------------------------------------------------------------------------------------------------------------------+
-| n_nationkey | n_name         | n_regionkey | n_comment                                                                                                          |
-+-------------+----------------+-------------+--------------------------------------------------------------------------------------------------------------------+
-| 0           | ALGERIA        | 0           |  haggle. carefully final deposits detect slyly agai                                                                |
-| 1           | ARGENTINA      | 1           | al foxes promise slyly according to the regular accounts. bold requests alon                                       |
-| 2           | BRAZIL         | 1           | y alongside of the pending deposits. carefully special packages are about the ironic forges. slyly special         |
-| 3           | CANADA         | 1           | eas hang ironic, silent packages. slyly regular packages are furiously over the tithes. fluffily bold              |
-| 4           | EGYPT          | 4           | y above the carefully unusual theodolites. final dugouts are quickly across the furiously regular d                |
-| 5           | ETHIOPIA       | 0           | ven packages wake quickly. regu                                                                                    |
-| 6           | FRANCE         | 3           | refully final requests. regular, ironi                                                                             |
-| 7           | GERMANY        | 3           | l platelets. regular accounts x-ray: unusual, regular acco                                                         |
-| 8           | INDIA          | 2           | ss excuses cajole slyly across the packages. deposits print aroun                                                  |
-| 9           | INDONESIA      | 2           |  slyly express asymptotes. regular deposits haggle slyly. carefully ironic hockey players sleep blithely. carefull |
-| 10          | IRAN           | 4           | efully alongside of the slyly final dependencies.                                                                  |
-| 11          | IRAQ           | 4           | nic deposits boost atop the quickly final requests? quickly regula                                                 |
-| 12          | JAPAN          | 2           | ously. final, express gifts cajole a                                                                               |
-| 13          | JORDAN         | 4           | ic deposits are blithely about the carefully regular pa                                                            |
-| 14          | KENYA          | 0           |  pending excuses haggle furiously deposits. pending, express pinto beans wake fluffily past t                      |
-| 15          | MOROCCO        | 0           | rns. blithely bold courts among the closely regular packages use furiously bold platelets?                         |
-| 16          | MOZAMBIQUE     | 0           | s. ironic, unusual asymptotes wake blithely r                                                                      |
-| 17          | PERU           | 1           | platelets. blithely pending dependencies use fluffily across the even pinto beans. carefully silent accoun         |
-| 18          | CHINA          | 2           | c dependencies. furiously express notornis sleep slyly regular accounts. ideas sleep. depos                        |
-| 19          | ROMANIA        | 3           | ular asymptotes are about the furious multipliers. express dependencies nag above the ironically ironic account    |
-| 20          | SAUDI ARABIA   | 4           | ts. silent requests haggle. closely express packages sleep across the blithely                                     |
-| 21          | VIETNAM        | 2           | hely enticingly express accounts. even, final                                                                      |
-| 22          | RUSSIA         | 3           |  requests against the platelets use never according to the quickly regular pint                                    |
-| 23          | UNITED KINGDOM | 3           | eans boost carefully special requests. accounts are. carefull                                                      |
-| 24          | UNITED STATES  | 1           | y final packages. slow foxes cajole quickly. quickly silent platelets breach ironic accounts. unusual pinto be     |
-+-------------+----------------+-------------+--------------------------------------------------------------------------------------------------------------------+
-
+$ sudo -u $USER impala-shell
+[quickstart.cloudera:21000] > use rs;
+Query: use rs
+[quickstart.cloudera:21000] > select * from rs.employees;
+Query: select * from rs.employees
++-----------+-------------+-----------------------------------------------+------------------+--------+-------------+
+| firstname | lastname    | position                                      | department       | salary | phonenumber |
++-----------+-------------+-----------------------------------------------+------------------+--------+-------------+
+| Peter     | Aaron       | WATER RATE TAKER                              | WATER MGMNT      | 88968  | 5551962     |
+| Rufi      | Bhola       | TRAFFIC SIGNAL REPAIRMAN                      | TRANSPORTN       | 95888  | 5551543     |
+| Faruk     | Bota        | POLICE OFFICER                                | POLICE           | 80778  | 5551860     |
+| Mary      | Bradley     | POLICE OFFICER                                | POLICE           | 80778  | 5551638     |
+| Joseph    | Chu         | ASST TO THE ALDERMAN                          | CITY COUNCIL     | 70764  | 5551218     |
+| Sam       | Cinq        | CHIEF CONTRACT EXPEDITER                      | GENERAL SERVICES | 84780  | 5551969     |
+| Carol     | Cloud       | CIVIL ENGINEER IV                             | WATER MGMNT      | 104736 | 5551219     |
+| Mackay    | Dalford     | POLICE OFFICER                                | POLICE           | 46206  | 5551516     |
+| Drake     | Desmond     | GENERAL LABORER - DSS                         | STREETS & SAN    | 40560  | 5551551     |
+| Sachen    | Dhoot       | ELECTRICAL MECHANIC                           | AVIATION         | 91520  | 5551500     |
+| Albert    | Encino      | FIRE ENGINEER                                 | FIRE             | 90456  | 5551834     |
+| Arthur    | Excalibur   | POLICE OFFICER                                | POLICE           | 86520  | 5551485     |
+| Eric      | Freeman     | FOSTER GRANDPARENT                            | FAMILY & SUPPORT | 2756   | 5551706     |
+| Fred      | Gobi        | CLERK III                                     | POLICE           | 43920  | 5551597     |
+| Ivan      | Gorbachev   | INVESTIGATOR - IPRA II                        | IPRA             | 72468  | 5551978     |
+| Theodore  | Henry       | POLICE OFFICER                                | POLICE           | 69684  | 5551904     |
+| Cranston  | Horton      | POLICE OFFICER                                | POLICE           | 80778  | 5551924     |
+| Bobi      | Ingerwen    | FIREFIGHTER (PER ARBITRATORS AWARD)-PARAMEDIC | FIRE             | 98244  | 5551294     |
+| Franz     | Isenglass   | POLICE OFFICER                                | POLICE           | 80778  | 5551249     |
+| Jenny     | Jakuti      | FIREFIGHTER/PARAMEDIC                         | FIRE             | 87720  | 5551656     |
+| Karl      | Karloff     | ENGINEERING TECHNICIAN VI                     | WATER MGMNT      | 106104 | 5551911     |
+| Kathryn   | Kretchmer   | FIREFIGHTER-EMT                               | FIRE             | 91764  | 5551875     |
+| Loren     | Lakshmi     | LIEUTENANT                                    | FIRE             | 110370 | 5551082     |
+| Dudley    | Less        | SENIOR ENVIRONMENTAL INSPECTOR                | HEALTH           | 76656  | 5551407     |
+| Mahood    | Mahmut      | CROSSING GUARD                                | POLICE           | 16692  | 5551892     |
+| Wanda     | Myers       | GENERAL LABORER - DSS                         | STREETS & SAN    | 40560  | 5551644     |
+| Trey      | Mystique    | ELECTRICAL MECHANIC-AUTO-POLICE MTR MNT       | GENERAL SERVICES | 91520  | 5551376     |
+| Manuel    | Nickels     | POLICE OFFICER                                | POLICE           | 86520  | 5551380     |
+| Sheldon   | Overton     | PARAMEDIC                                     | FIRE             | 54114  | 5551551     |
+| Lana      | Park        | MOTOR TRUCK DRIVER                            | STREETS & SAN    | 71781  | 5551530     |
+| Franny    | Periodico   | LIBRARY ASSOCIATE - HOURLY                    | PUBLIC LIBRARY   | 24835  | 5551413     |
+| Perry     | Polite      | CIVIL ENGINEER IV                             | WATER MGMNT      | 104736 | 5551891     |
+| Mike      | Processer   | SENIOR PROGRAMMER/ANALYST                     | DoIT             | 104736 | 5551139     |
+| Quincy    | Quintado    | ENGINEERING TECHNICIAN V                      | BUSINESS AFFAIRS | 96672  | 5551406     |
+| Richard   | Ramstadt    | POLICE OFFICER                                | POLICE           | 46206  | 5551517     |
+| Chandra   | Sambrosa    | SENIOR COMPANION                              | FAMILY & SUPPORT | 2756   | 5551896     |
+| Amber     | Sikh        | SUPERVISING TRAFFIC CONTROL AIDE              | OEMC             | 55800  | 5551384     |
+| Thomas    | Spelt       | SANITATION LABORER                            | STREETS & SAN    | 72384  | 5551807     |
+| Boli      | Tiku        | POLICE OFFICER                                | POLICE           | 92316  | 5551921     |
+| Clark     | Trent       | AMBULANCE COMMANDER                           | FIRE             | 123948 | 5551998     |
+| Noreen    | Umbrella    | POOL MOTOR TRUCK DRIVER                       | STREETS & SAN    | 16151  | 5551173     |
+| Conrad    | Valvoly     | FIREFIGHTER-EMT                               | FIRE             | 85680  | 5551908     |
+| June      | Vendi       | SEWER BRICKLAYER                              | WATER MGMNT      | 88566  | 5551022     |
+| Auicula   | Ventricular | TREE TRIMMER                                  | STREETS & SAN    | 74464  | 5551512     |
+| Solomon   | Wally       | POLICE OFFICER                                | POLICE           | 89718  | 5551750     |
+| Winifred  | Wonderman   | ELECTRICAL MECHANIC                           | AVIATION         | 91520  | 5551990     |
+| Elvin     | Yahuli      | POLICE OFFICER                                | POLICE           | 86520  | 5551675     |
+| Aloysius  | Zeke        | FIREFIGHTER-EMT                               | FIRE             | 95460  | 5551601     |
+| Anderson  | Zephyr      | PERSONAL COMPUTER OPERATOR III                | HEALTH           | 66684  | 5551717     |
+| Zelda     | Zion        | FIREFIGHTER-EMT                               | FIRE             | 99920  | 5553970     |
++-----------+-------------+-----------------------------------------------+------------------+--------+-------------+
+Fetched 50 row(s) in 3.75s
 </pre>
 
-* Use Impala to create a restricted view on `tpch.nation`. First you create a role named _demorole_. Next, add the role to the _demogroup_ you created above. Create a view on the n_nationkey and n_name columns of the `tpch.nation` table, and grant the _select_ privilege to demorole.
-
-<pre>[quickstart.cloudera:21000] > CREATE ROLE demorole;
-[quickstart.cloudera:21000] > GRANT ROLE demorole to GROUP demogroup;
-[quickstart.cloudera:21000] > CREATE VIEW nation_names AS SELECT n_nationkey, n_name FROM tpch.nation;
-[quickstart.cloudera:21000] > GRANT SELECT ON TABLE tpch.nation_names TO ROLE demorole;
-</pre>
-
-* Re-run the query using the nation_names view.
+* Use Impala to create a restricted view on `rs.employees`. First you create a role named _demorole_. Next, add the role to the _demogroup_ you created above. Create a view on the `firstname`, `lastname`, and `phonenumber` columns of the `rs.employees` table, and grant the _select_ privilege to demorole.
 
 <pre>
-[quickstart.cloudera:21000] > select * from tpch.nation_names;
-Query: select * from tpch.nation_names
-+-------------+----------------+
-| n_nationkey | n_name         |
-+-------------+----------------+
-| 0           | ALGERIA        |
-| 1           | ARGENTINA      |
-| 2           | BRAZIL         |
-| 3           | CANADA         |
-| 4           | EGYPT          |
-| 5           | ETHIOPIA       |
-| 6           | FRANCE         |
-| 7           | GERMANY        |
-| 8           | INDIA          |
-| 9           | INDONESIA      |
-| 10          | IRAN           |
-| 11          | IRAQ           |
-| 12          | JAPAN          |
-| 13          | JORDAN         |
-| 14          | KENYA          |
-| 15          | MOROCCO        |
-| 16          | MOZAMBIQUE     |
-| 17          | PERU           |
-| 18          | CHINA          |
-| 19          | ROMANIA        |
-| 20          | SAUDI ARABIA   |
-| 21          | VIETNAM        |
-| 22          | RUSSIA         |
-| 23          | UNITED KINGDOM |
-| 24          | UNITED STATES  |
-+-------------+----------------+
-Fetched 25 row(s) in 0.36s
+[quickstart.cloudera:21000] > create role demorole;
+Query: create role demorole
+
+Fetched 0 row(s) in 0.40s
+[quickstart.cloudera:21000] > grant role demorole to group demogroup;
+Query: grant role demorole to group demogroup
+
+Fetched 0 row(s) in 0.11s
+[quickstart.cloudera:21000] > create view phone_list as select firstname, lastname, phonenumber from rs.employees;
+Query: create view phone_list as select firstname, lastname, phonenumber from rs.employees
+[quickstart.cloudera:21000] > grant select on table rs.phone_list to role demorole;
+Query: grant select on table rs.phone_list to role demorole
+</pre>
+
+* Re-run the query using the rs.phone_list view.
+
+<pre>
+[quickstart.cloudera:21000] > select * from rs.phone_list;
+Query: select * from rs.phone_list
++-----------+-------------+-------------+
+| firstname | lastname    | phonenumber |
++-----------+-------------+-------------+
+| Peter     | Aaron       | 5551962     |
+| Rufi      | Bhola       | 5551543     |
+| Faruk     | Bota        | 5551860     |
+| Mary      | Bradley     | 5551638     |
+| Joseph    | Chu         | 5551218     |
+| Sam       | Cinq        | 5551969     |
+| Carol     | Cloud       | 5551219     |
+| Mackay    | Dalford     | 5551516     |
+| Drake     | Desmond     | 5551551     |
+| Sachen    | Dhoot       | 5551500     |
+| Albert    | Encino      | 5551834     |
+| Arthur    | Excalibur   | 5551485     |
+| Eric      | Freeman     | 5551706     |
+| Fred      | Gobi        | 5551597     |
+| Ivan      | Gorbachev   | 5551978     |
+| Theodore  | Henry       | 5551904     |
+| Cranston  | Horton      | 5551924     |
+| Bobi      | Ingerwen    | 5551294     |
+| Franz     | Isenglass   | 5551249     |
+| Jenny     | Jakuti      | 5551656     |
+| Karl      | Karloff     | 5551911     |
+| Kathryn   | Kretchmer   | 5551875     |
+| Loren     | Lakshmi     | 5551082     |
+| Dudley    | Less        | 5551407     |
+| Mahood    | Mahmut      | 5551892     |
+| Wanda     | Myers       | 5551644     |
+| Trey      | Mystique    | 5551376     |
+| Manuel    | Nickels     | 5551380     |
+| Sheldon   | Overton     | 5551551     |
+| Lana      | Park        | 5551530     |
+| Franny    | Periodico   | 5551413     |
+| Perry     | Polite      | 5551891     |
+| Mike      | Processer   | 5551139     |
+| Quincy    | Quintado    | 5551406     |
+| Richard   | Ramstadt    | 5551517     |
+| Chandra   | Sambrosa    | 5551896     |
+| Amber     | Sikh        | 5551384     |
+| Thomas    | Spelt       | 5551807     |
+| Boli      | Tiku        | 5551921     |
+| Clark     | Trent       | 5551998     |
+| Noreen    | Umbrella    | 5551173     |
+| Conrad    | Valvoly     | 5551908     |
+| June      | Vendi       | 5551022     |
+| Auicula   | Ventricular | 5551512     |
+| Solomon   | Wally       | 5551750     |
+| Winifred  | Wonderman   | 5551990     |
+| Elvin     | Yahuli      | 5551675     |
+| Aloysius  | Zeke        | 5551601     |
+| Anderson  | Zephyr      | 5551717     |
+| Zelda     | Zion        | 5553970     |
++-----------+-------------+-------------+
+Fetched 50 row(s) in 0.37s
+</pre>
+
+## Controlling Row Access
+
+You can also define a view and assign access that restricts a user to certain rows in the data set.
+
+Create a view that restricts the rows returned. For example, where <i>position</i> is not <code>POLICE OFFICER</code>.
+
+<pre>
+[quickstart.cloudera:21000] > create view no_police as select * from rs.employees where position <> "POLICE OFFICER";
+Query: create view no_police as select * from rs.employees where position <> "POLICE OFFICER"
+</pre>
+
+Assign that view to <i>demorole</i>.
+
+<pre>
+[quickstart.cloudera:21000] > grant select on table rs.no_police to role demorole;
+Query: grant select on table rs.no_police to role demorole
+</pre>
+
+Select all from the no_police view.
+
+<pre>
+[quickstart.cloudera:21000] > select * from rs.no_police;
+Query: select * from rs.no_police
++-----------+-------------+-----------------------------------------------+------------------+--------+-------------+
+| firstname | lastname    | position                                      | department       | salary | phonenumber |
++-----------+-------------+-----------------------------------------------+------------------+--------+-------------+
+| Peter     | Aaron       | WATER RATE TAKER                              | WATER MGMNT      | 88968  | 5551962     |
+| Rufi      | Bhola       | TRAFFIC SIGNAL REPAIRMAN                      | TRANSPORTN       | 95888  | 5551543     |
+| Joseph    | Chu         | ASST TO THE ALDERMAN                          | CITY COUNCIL     | 70764  | 5551218     |
+| Sam       | Cinq        | CHIEF CONTRACT EXPEDITER                      | GENERAL SERVICES | 84780  | 5551969     |
+| Carol     | Cloud       | CIVIL ENGINEER IV                             | WATER MGMNT      | 104736 | 5551219     |
+| Drake     | Desmond     | GENERAL LABORER - DSS                         | STREETS & SAN    | 40560  | 5551551     |
+| Sachen    | Dhoot       | ELECTRICAL MECHANIC                           | AVIATION         | 91520  | 5551500     |
+| Albert    | Encino      | FIRE ENGINEER                                 | FIRE             | 90456  | 5551834     |
+| Eric      | Freeman     | FOSTER GRANDPARENT                            | FAMILY & SUPPORT | 2756   | 5551706     |
+| Fred      | Gobi        | CLERK III                                     | POLICE           | 43920  | 5551597     |
+| Ivan      | Gorbachev   | INVESTIGATOR - IPRA II                        | IPRA             | 72468  | 5551978     |
+| Bobi      | Ingerwen    | FIREFIGHTER (PER ARBITRATORS AWARD)-PARAMEDIC | FIRE             | 98244  | 5551294     |
+| Jenny     | Jakuti      | FIREFIGHTER/PARAMEDIC                         | FIRE             | 87720  | 5551656     |
+| Karl      | Karloff     | ENGINEERING TECHNICIAN VI                     | WATER MGMNT      | 106104 | 5551911     |
+| Kathryn   | Kretchmer   | FIREFIGHTER-EMT                               | FIRE             | 91764  | 5551875     |
+| Loren     | Lakshmi     | LIEUTENANT                                    | FIRE             | 110370 | 5551082     |
+| Dudley    | Less        | SENIOR ENVIRONMENTAL INSPECTOR                | HEALTH           | 76656  | 5551407     |
+| Mahood    | Mahmut      | CROSSING GUARD                                | POLICE           | 16692  | 5551892     |
+| Wanda     | Myers       | GENERAL LABORER - DSS                         | STREETS & SAN    | 40560  | 5551644     |
+| Trey      | Mystique    | ELECTRICAL MECHANIC-AUTO-POLICE MTR MNT       | GENERAL SERVICES | 91520  | 5551376     |
+| Sheldon   | Overton     | PARAMEDIC                                     | FIRE             | 54114  | 5551551     |
+| Lana      | Park        | MOTOR TRUCK DRIVER                            | STREETS & SAN    | 71781  | 5551530     |
+| Franny    | Periodico   | LIBRARY ASSOCIATE - HOURLY                    | PUBLIC LIBRARY   | 24835  | 5551413     |
+| Perry     | Polite      | CIVIL ENGINEER IV                             | WATER MGMNT      | 104736 | 5551891     |
+| Mike      | Processer   | SENIOR PROGRAMMER/ANALYST                     | DoIT             | 104736 | 5551139     |
+| Quincy    | Quintado    | ENGINEERING TECHNICIAN V                      | BUSINESS AFFAIRS | 96672  | 5551406     |
+| Chandra   | Sambrosa    | SENIOR COMPANION                              | FAMILY & SUPPORT | 2756   | 5551896     |
+| Amber     | Sikh        | SUPERVISING TRAFFIC CONTROL AIDE              | OEMC             | 55800  | 5551384     |
+| Thomas    | Spelt       | SANITATION LABORER                            | STREETS & SAN    | 72384  | 5551807     |
+| Clark     | Trent       | AMBULANCE COMMANDER                           | FIRE             | 123948 | 5551998     |
+| Noreen    | Umbrella    | POOL MOTOR TRUCK DRIVER                       | STREETS & SAN    | 16151  | 5551173     |
+| Conrad    | Valvoly     | FIREFIGHTER-EMT                               | FIRE             | 85680  | 5551908     |
+| June      | Vendi       | SEWER BRICKLAYER                              | WATER MGMNT      | 88566  | 5551022     |
+| Auicula   | Ventricular | TREE TRIMMER                                  | STREETS & SAN    | 74464  | 5551512     |
+| Winifred  | Wonderman   | ELECTRICAL MECHANIC                           | AVIATION         | 91520  | 5551990     |
+| Aloysius  | Zeke        | FIREFIGHTER-EMT                               | FIRE             | 95460  | 5551601     |
+| Anderson  | Zephyr      | PERSONAL COMPUTER OPERATOR III                | HEALTH           | 66684  | 5551717     |
+| Zelda     | Zion        | FIREFIGHTER-EMT                               | FIRE             | 99920  | 5553970     |
++-----------+-------------+-----------------------------------------------+------------------+--------+-------------+
+Fetched 38 row(s) in 0.74s
 </pre>

@@ -15,6 +15,8 @@ Follow these steps to download the RecordService VM.
 
 ## Installing the RecordService VM
 
+|| <b>Note:</b> If you have previously installed the VM on your host machine, follow the instructions in [Verify VM is Listed Correctly in Hosts](#verify-vm-is-listed-correctly-in-hosts) and [Verify Known Hosts](#verify-known-hosts). ||
+
 Follow these steps to install the RecordService VM.
 
 1. In a terminal window, navigate to the root of the RSQuickstart Git repository.
@@ -68,7 +70,7 @@ VBoxManage list runningvms
 
 &nbsp;&nbsp;&nbsp;&nbsp;You should see “rs-demo” listed as a running VM.
 
-### Verify VM is listed correctly in /etc/hosts
+### Verify VM is Listed Correctly in Hosts
 
 Check that the VM is listed correctly in your `/etc/hosts` file. If you open the file, you should see a line that lists an IP address followed by `quickstart.cloudera`. You can check the VM’s IP with the following command:
 
@@ -79,6 +81,19 @@ VBoxManage guestproperty get rs-demo /VirtualBox/GuestInfo/Net/0/V4/IP
 ### Verify Known Hosts
 
 If you’ve used a Cloudera QuickStart VM before, your known hosts file might already have an entry for `quickstart.cloudera` registered to a different key. Delete any reference to `quickstart.cloudera` from your known hosts file, which is usually found in `~/.ssh/known_hosts`.
+
+### Verify Workers Are Running
+
+If you receive an error message similar to the following, your worker nodes are likely not running:
+```
+Exception in thread "main" java.io.IOException: com.cloudera.recordservice.core.RecordServiceException: TRecordServiceException(code:INVALID_REQUEST, message:Worker membership is empty. Please ensure all RecordService Worker nodes are running.)
+```
+
+You can correct the problem by restarting the RecordService server using the following command:
+
+```
+sudo service recordservice-server restart
+```
 
 ## Debugging the VM
 
