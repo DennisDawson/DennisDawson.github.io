@@ -28,7 +28,7 @@ As you use RecordService during the public beta period, keep in mind the followi
 
 ## Notable Bug Fixes in RecordService Beta 0.2.0
 * Fix support for multiple planners with path requests.
-* Path requests do not seem to be plumbing connected user all the way through.
+* Path requests do not contain the connected user in some cases, causing requests to fail with authorization errors.
 * `SpecificMutableRow Exception` while running spark-shell with RecordService.
 * Port conflict when two `recordserviceds` are running on the same host.
 * Update `task_size` to use total bytes of scan ranges.
