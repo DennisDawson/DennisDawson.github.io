@@ -1,6 +1,6 @@
 ---
 layout: article
-title: 'RecordService Beta Release Notes'
+title: 'RecordService Beta 0.2.0 Release Notes'
 share: false
 ---
 
@@ -17,6 +17,22 @@ As you use RecordService during the public beta period, keep in mind the followi
 * Although multiple releases of beta code might be planned, the contents are not guaranteed. There is no schedule for future beta code releases. Any releases are announced to the user group as they occur.
 
 {% include toc.html %}
+
+## New Features in RecordService Beta 0.2.0
+
+* Support for CDH5.5, including:
+    * Sentry Column-Level Authorization.
+    * Spark 1.5.
+* CSD user experience improvements for Spark and Sentry configuration.
+* Performance improvements for loading metadata.
+
+## Notable Bug Fixes in RecordService Beta 0.2.0
+* Fix support for multiple planners with path requests.
+* Path requests do not seem to be plumbing connected user all the way through.
+* `SpecificMutableRow Exception` while running spark-shell with RecordService.
+* Port conflict when two `recordserviceds` are running on the same host.
+* Update `task_size` to use total bytes of scan ranges.
+* Fail plan request when worker membership is empty.
 
 ## RecordService VM Requirements
 
@@ -36,7 +52,7 @@ RecordService supports the following software and hardware configurations when r
 
 RecordService supports reading HDFS or S3 of the following file formats:
 
-* Parquet
+* Parquet 
 * Text
 * Sequence file
 * RC
@@ -99,14 +115,6 @@ sudo yum install cyrus-sasl-md5
 #### Workaround
 
 In Cloudera Manager, open the HDFS configuration page and search for _shortcircuit_. There are two configurations named **Enable HDFS Short Circuit Read**. One defaults to _true_ and one to _false_. Set both values to _true_.
-
-### Path requests do not work with multiple planners
-
-The RecordService planner creates a temporary table. The name of the table collides between RecordService planners. On a single planner, it is properly protected by a lock. On the Hive Metastore Server, collisions are likely to occur.
-
-#### Workaround
-
-For the beta release, run only one instance of the RecordService planner.
 
 ## Limitations
 
