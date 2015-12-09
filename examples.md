@@ -39,7 +39,7 @@ The following examples can be found at [https://github.com/cloudera/RecordServic
 | How to use RecordService with Spark shell | Examples of using spark-shell to interact with RecordService in a variety of ways.|
 | Reading Data from a View and Enforcing Sentry Permissions | This example demonstrates how an MR job may now read data even when the user only has permission to see part of the data in a file (table). See [ReadMe.md](https://github.com/cloudera/RecordServiceClient/blob/master/java/examples-spark/README.md#how-to-enforce-sentry-permissions-with-spark) |
 
-## Using RecordService to Control RecordService Access
+## Using RecordService to Control Column-level Access
 
 RecordService provides column-level security. You can restrict users in a group to a subset of columns in a dataset. This allows you to maintain a single, secure dataset that can be viewed and updated by users with specific access rights to only the columns they need.
 
