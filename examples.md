@@ -39,9 +39,9 @@ The following examples can be found at [https://github.com/cloudera/RecordServic
 | How to use RecordService with Spark shell | Examples of using spark-shell to interact with RecordService in a variety of ways.|
 | Reading Data from a View and Enforcing Sentry Permissions | This example demonstrates how an MR job may now read data even when the user only has permission to see part of the data in a file (table). See [ReadMe.md](https://github.com/cloudera/RecordServiceClient/blob/master/java/examples-spark/README.md#how-to-enforce-sentry-permissions-with-spark) |
 
-## Using Views to Control RecordService Access
+## Using RecordService to Control RecordService Access
 
-RecordService provides column-level security. You can create a view that restricts users in a group to a subset of columns in a dataset. This allows you to maintain a single, secure dataset that can be viewed and updated by users with specific access rights to only the columns they need.
+RecordService provides column-level security. You can restrict users in a group to a subset of columns in a dataset. This allows you to maintain a single, secure dataset that can be viewed and updated by users with specific access rights to only the columns they need.
 
 For example, this schema describes a table that stores information about employees.
 
@@ -54,9 +54,9 @@ For example, this schema describes a table that stores information about employe
 | salary | long |
 | phone | long |
 
-Suppose you want your employees to have access to the names and phone numbers, but not the position or salary info. You can create a view that allows users to see only the columns you want them to see.
+Suppose you want your employees to have access to the names and phone numbers, but not the position or salary info. You can create a group that allows users to see only the columns you want them to see.
 
-To assign access with column-level restrictions, you create a role, assign the role to a group, create a view with the columns the group can access, and then assign the view to the role.
+To assign access with column-level restrictions, you create a role, assign the role to a group, and then grant permissions to the role.
 
 * [Download and Install the RecordService VM]({{site.baseurl}}/vm.html).
 
@@ -139,7 +139,7 @@ Query: select * from rs.employees
 Fetched 50 row(s) in 3.75s
 </pre>
 
-* Use Impala to create a restricted view on `rs.employees`. First you create a role named _demorole_. Next, add the role to the _demogroup_ you created above. Create a view on the `firstname`, `lastname`, and `phonenumber` columns of the `rs.employees` table, and grant the _select_ privilege to demorole.
+* Use Impala to set permissions for a group of users of `rs.employees`. First,  create a role named _demorole_. Next, add the role to the _demogroup_ you created before starting Impala. Grant the _select_ privilege to demorole for only the columns `firstname`, `lastname`, and `phonenumber` from the `rs.employees` table.
 
 <pre>
 [quickstart.cloudera:21000] > create role demorole;
@@ -149,74 +149,50 @@ Fetched 0 row(s) in 0.40s
 [quickstart.cloudera:21000] > grant role demorole to group demogroup;
 Query: grant role demorole to group demogroup
 
+[quickstart.cloudera:21000] > GRANT SELECT(firstname, lastname, phonenumber) ON TABLE rs.employees TO ROLE demorole;
+
 Fetched 0 row(s) in 0.11s
-[quickstart.cloudera:21000] > create view phone_list as select firstname, lastname, phonenumber from rs.employees;
-Query: create view phone_list as select firstname, lastname, phonenumber from rs.employees
-[quickstart.cloudera:21000] > grant select on table rs.phone_list to role demorole;
-Query: grant select on table rs.phone_list to role demorole
 </pre>
 
-* Re-run the query using the rs.phone_list view.
+* Exit Impala.
+
+* From the home directory, execute the following command. This is a trivial example class that counts the number of records in the table. Since the command specifies the <i>salary</i> column, to which the $USER (cloudera) does not have access, the command fails.
 
 <pre>
-[quickstart.cloudera:21000] > select * from rs.phone_list;
-Query: select * from rs.phone_list
-+-----------+-------------+-------------+
-| firstname | lastname    | phonenumber |
-+-----------+-------------+-------------+
-| Peter     | Aaron       | 5551962     |
-| Rufi      | Bhola       | 5551543     |
-| Faruk     | Bota        | 5551860     |
-| Mary      | Bradley     | 5551638     |
-| Joseph    | Chu         | 5551218     |
-| Sam       | Cinq        | 5551969     |
-| Carol     | Cloud       | 5551219     |
-| Mackay    | Dalford     | 5551516     |
-| Drake     | Desmond     | 5551551     |
-| Sachen    | Dhoot       | 5551500     |
-| Albert    | Encino      | 5551834     |
-| Arthur    | Excalibur   | 5551485     |
-| Eric      | Freeman     | 5551706     |
-| Fred      | Gobi        | 5551597     |
-| Ivan      | Gorbachev   | 5551978     |
-| Theodore  | Henry       | 5551904     |
-| Cranston  | Horton      | 5551924     |
-| Bobi      | Ingerwen    | 5551294     |
-| Franz     | Isenglass   | 5551249     |
-| Jenny     | Jakuti      | 5551656     |
-| Karl      | Karloff     | 5551911     |
-| Kathryn   | Kretchmer   | 5551875     |
-| Loren     | Lakshmi     | 5551082     |
-| Dudley    | Less        | 5551407     |
-| Mahood    | Mahmut      | 5551892     |
-| Wanda     | Myers       | 5551644     |
-| Trey      | Mystique    | 5551376     |
-| Manuel    | Nickels     | 5551380     |
-| Sheldon   | Overton     | 5551551     |
-| Lana      | Park        | 5551530     |
-| Franny    | Periodico   | 5551413     |
-| Perry     | Polite      | 5551891     |
-| Mike      | Processer   | 5551139     |
-| Quincy    | Quintado    | 5551406     |
-| Richard   | Ramstadt    | 5551517     |
-| Chandra   | Sambrosa    | 5551896     |
-| Amber     | Sikh        | 5551384     |
-| Thomas    | Spelt       | 5551807     |
-| Boli      | Tiku        | 5551921     |
-| Clark     | Trent       | 5551998     |
-| Noreen    | Umbrella    | 5551173     |
-| Conrad    | Valvoly     | 5551908     |
-| June      | Vendi       | 5551022     |
-| Auicula   | Ventricular | 5551512     |
-| Solomon   | Wally       | 5551750     |
-| Winifred  | Wonderman   | 5551990     |
-| Elvin     | Yahuli      | 5551675     |
-| Aloysius  | Zeke        | 5551601     |
-| Anderson  | Zephyr      | 5551717     |
-| Zelda     | Zion        | 5553970     |
-+-----------+-------------+-------------+
-Fetched 50 row(s) in 0.37s
+[cloudera@quickstart ~]$ hadoop jar \
+./recordservice-client-0.1/lib/recordservice-examples-0.1.jar \
+com.cloudera.recordservice.examples.mapreduce.RecordCount \
+"select lastname, salary from rs.employees" "/tmp/count_salary_output"
+
+15/12/08 17:41:26 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+
+. . . 
+
+RecordServiceException: TRecordServiceException(code:INVALID_REQUEST, message:Could not plan request., detail:AuthorizationException: User 'cloudera' does not have privileges to execute 'SELECT' on: rs.employees
+. . .
 </pre>
+
+* Now run the same command, but specify the `firstname`, `lastname`, and `phonenumber` columns.
+
+<pre>
+[cloudera@quickstart ~]$ hadoop jar \
+./recordservice-client-0.1/lib/recordservice-examples-0.1.jar \
+com.cloudera.recordservice.examples.mapreduce.RecordCount \
+"select firstname, lastname, phonenumber from rs.employees" \
+"/tmp/count_phonelist_output"
+
+15/12/08 17:42:25 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+. . .
+File Output Format Counters 
+    Bytes Written=3
+</pre>
+
+* View the results using Hadoop.
+<pre>
+hadoop fs -cat /tmp/count_phonelist_output/part-r-00000
+</pre>
+
+The result returned is a row count of 50.
 
 ## Controlling Row Access
 
