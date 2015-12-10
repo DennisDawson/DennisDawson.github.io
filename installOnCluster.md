@@ -74,7 +74,7 @@ Follow these steps to start RecordService for a cluster from Cloudera Manager.
     * RecordService Planner: Select hosts with the role of NN.
     * RecordService Worker: Select hosts with the role of DN.
 1. Review and modify configuration settings, such as *log dir* and *planner port*.
-    * If Sentry is enabled in the cluster, add your configuration to the field **Configuration Snippet (Safety Valve) for sentry-site.xml**. You can find your Sentry configurations either from the Cloudera Manager Sentry process or Sentry process directory (`/var/run/cloudera-scm-agent/process/*-sentry-SENTRY_SERVER/sentry-site.xml`).
+    * If Sentry is enabled in the cluster, add your configuration to the field **Configuration Snippet (Safety Valve) for sentry-site.xml**. You can find your Sentry configurations either from the Cloudera Manager Sentry `process` or Sentry `process` directory (`/var/run/cloudera-scm-agent/process/*-sentry-SENTRY_SERVER/sentry-site.xml`).
 1. Start the service.
 1. Go to the debug page hostname:11050 to verify that the service started properly. 
 1. Go to the RecordService cluster page in Cloudera Manager.
