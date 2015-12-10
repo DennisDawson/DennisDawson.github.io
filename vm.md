@@ -283,9 +283,12 @@ If you’ve used a Cloudera QuickStart VM before, your known hosts file might al
 ### Verify Workers Are Running
 
 If you receive an error message similar to the following, your worker nodes are likely not running:
-```
-Exception in thread "main" java.io.IOException: com.cloudera.recordservice.core.RecordServiceException: TRecordServiceException(code:INVALID_REQUEST, message:Worker membership is empty. Please ensure all RecordService Worker nodes are running.)
-```
+<pre>
+Exception in thread "main" java.io.IOException: 
+com.cloudera.recordservice.core.RecordServiceException: 
+TRecordServiceException(code:INVALID_REQUEST, message:
+Worker membership is empty. Please ensure all RecordService Worker nodes are running.)
+</pre>
 
 You can correct the problem by restarting the RecordService server using the following command:
 
