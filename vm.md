@@ -224,6 +224,7 @@ You can also define a view and assign access that restricts a user to certain ro
 Create a view that restricts the rows returned. For example, where <i>position</i> is not <code>POLICE OFFICER</code>.
 
 <pre>
+[quickstart.cloudera:21000] > use rs;
 [quickstart.cloudera:21000] > create view rs.no_police as select * from rs.employees where position <> "POLICE OFFICER";
 Query: create view rs.no_police as select * from rs.employees where position <> "POLICE OFFICER"
 </pre>
