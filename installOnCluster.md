@@ -28,25 +28,24 @@ Follow these steps to install the RecordService CSD.
 1. Upload the CSD to `/opt/cloudera/csd` in the Cloudera Manager server.
 1. Change the owner and group for the JAR using the following comamand-line instruction:<br/>
 ```
-chown cloudera-scm:cloudera-scm /opt/cloudera/csd/RECORD_SERVICE-1.0.jar
+chown cloudera-scm:cloudera-scm /opt/cloudera/csd/RECORD_SERVICE-0.2.0.jar
 ```
 1. Update the permissions on the file using the following command-line instruction:<br/>
 ```
-chmod 644 /opt/cloudera/csd/RECORD_SERVICE-1.0.jar
+chmod 644 /opt/cloudera/csd/RECORD_SERVICE-0.2.0.jar
 ```
 1. Restart the Cloudera Manager server:
     1. As the root user on the Cloudera Manager server, run `service cloudera-scm-server restart`.
     1. Log in to the Cloudera Manager Admin Console and restart the Cloudera Manager Service.
 1. Check whether the CSD successfully installed in `http://{cm-server}:7180/cmf/csd/refresh`. Search for the following entry:
 
-```
-{
-csdName: "RECORD_SERVICE-1.0",
-serviceType: "RECORD_SERVICE",
-source: "/opt/cloudera/csd/RECORD_SERVICE-1.0.jar",
-isInstalled: true
+<pre>
+{ csdName: "RECORD_SERVICE-0.2.0",
+  serviceType: "RECORD_SERVICE",
+  source: "/opt/cloudera/csd/RECORD_SERVICE-0.2.0.jar",
+  isInstalled: true
 }
-```
+</pre>
 
 See [http://www.cloudera.com/content/cloudera/en/documentation/core/latest/topics/cm_mc_addon_services.html](http://www.cloudera.com/content/cloudera/en/documentation/core/latest/topics/cm_mc_addon_services.html).
 
