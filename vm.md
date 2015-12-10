@@ -58,6 +58,10 @@ You can also connect from within `impala-shell`.
 CONNECT quickstart.cloudera:21000;
 ```
 
+## Running Examples on the VM
+
+The following examples demonstrate how to use RecordService to implement column- and row-level access in Hadoop. Additional examples are described in the topic [RecordService Examples]({{site.baseurl}}/examples.html). 
+
 ### Example: Using RecordService to Control Column-level Access
 
 RecordService provides column-level security. You can restrict users in a group to a subset of columns in a dataset. This allows you to maintain a single, secure dataset that can be viewed and updated by users with specific access rights to only the columns they need.
@@ -213,7 +217,7 @@ hadoop fs -cat /tmp/count_phonelist_output/part-r-00000
 
 The result returned is a row count of 50.
 
-### Example: Using RecordService to Control Row Access
+### Example: Using RecordService to Control Row-level Access
 
 You can also define a view and assign access that restricts a user to certain rows in the data set.
 
