@@ -81,8 +81,6 @@ Suppose you want your employees to have access to the names and phone numbers, b
 
 To assign access with column-level restrictions, you create a role, assign the role to a group, and then grant permissions to the role.
 
-* [Download and Install the RecordService VM]({{site.baseurl}}/vm.html).
-
 * Connect to the RecordService VM using the SSH command `ssh cloudera@quickstart.cloudera`.
 
 * Enter the password `cloudera`.
