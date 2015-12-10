@@ -78,6 +78,26 @@ RecordService does not support the following data types:
 
 ## Known Issues
 
+###  Saving machine state and restarting the VM can result in no registered workers
+
+After restarting the VM from a saved state, you might receive the following message when attempting to run RecordService applications.
+
+<pre>
+Exception in thread "main" java.io.IOException: 
+com.cloudera.recordservice.core.RecordServiceException: 
+TRecordServiceException(code:INVALID_REQUEST, message:Worker membership is 
+empty. Please ensure all RecordService Worker nodes are running.
+</pre>
+
+You can verify that the membership is 0 by looking at `http://quickstart.cloudera:11050/membership`.
+
+#### Workaround 
+Restart RecordService by running the following command on the VM: 
+
+```
+sudo service recordservice-server restart
+```
+
 ### RecordService client configurations are not properly propagated to Spark jobs
 
 RecordService configuration options are not propagated to Spark jobs using the RecordService custom service descriptor (CSD). All configuration options must be specified in the job or through Cloudera Manager safety valves for Spark.
