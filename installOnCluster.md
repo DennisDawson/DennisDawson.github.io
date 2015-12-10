@@ -57,7 +57,7 @@ Follow these steps to install the RecordService Parcel.
 1. Go to `http://{cm-server}:7180/cmf/parcel/status`.
 1. Click **Edit Settings**.
 1. Add the RecordService repository url `http://archive.cloudera.com/beta/recordservice/parcels/latest` to **Remote Parcel Repository URLs**.
-1. Open the Cloudera Manager **Parcel** status page, `http://{cm-server}:7180/cmf/parcel/status`. 
+1. Open the Cloudera Manager **Parcel** status page, `http://{cm-server}:7180/cmf/parcel/status`. If there is no RecordService parcel listed on the status page, click **Edit Settings** and add the RecordService repository URL `http://archive.cloudera.com/beta/recordservice/parcels/latest` to **Remote Parcel Repository URLs**.
 1. **Download** the RecordService parcel.
 1. **Distribute** the parcel.
 1. **Activate** the parcel. Cloudera Manager asks you to restart the entire cluster, but you only need to start/restart RecordService.
@@ -74,29 +74,7 @@ Follow these steps to start RecordService for a cluster from Cloudera Manager.
     * RecordService Planner: Select hosts with the role of NN.
     * RecordService Worker: Select hosts with the role of DN.
 1. Review and modify configuration settings, such as *log dir* and *planner port*.
-    * If Sentry is enabled in the cluster, add the following configuration to the field **Configuration Snippet (Safety Valve) for sentry-site.xml**.
-        <pre>
-&lt;property>
-     &lt;name>sentry.service.server.principal&lt;/name>
-     &lt;value>sentry/_HOST@principal&lt;/value>
-&lt;/property>
-&lt;property>
-    &lt;name>sentry.service.security.mode&lt;/name>
-    &lt;value>kerberos&lt;/value>
-&lt;/property>
-&lt;property>
-    &lt;name>sentry.service.client.server.rpc-address&lt;/name>
-    &lt;value>hostname&lt;/value>
-&lt;/property>
-&lt;property>
-    &lt;name>sentry.service.client.server.rpc-port&lt;/name>
-    &lt;value>portnum&lt;/value>
-&lt;/property>
-&lt;property>
-    &lt;name>hive.sentry.server&lt;/name>
-    &lt;value>server1&lt;/value>
-&lt;/property>
-        </pre>
+    * If Sentry is enabled in the cluster, add your configuration to the field **Configuration Snippet (Safety Valve) for sentry-site.xml**. You can find your Sentry configurations either from the Cloudera Manager Sentry process or Sentry process directory (`/var/run/cloudera-scm-agent/process/*-sentry-SENTRY_SERVER/sentry-site.xml`).
 1. Start the service.
 1. Go to the debug page hostname:11050 to verify that the service started properly. 
 1. Go to the RecordService cluster page in Cloudera Manager.
@@ -130,38 +108,39 @@ You can verify the RecordService server installation by running examples from th
 
 <li>Log in to one of the nodes in your cluster, and load test data:</li>
     
-```
-    > wget -q --no-clobber \ 
-      https://s3-us-west-1.amazonaws.com/recordservice-vm/tpch.tar.gz 
-    > tar -xzf tpch.tar.gz
-    > hadoop fs -mkdir -p /test-warehouse/tpch.nation
-    > hadoop fs -put -f tpch/nation/* /test-warehouse/tpch.nation/ 
-    > impala-shell -f create-tbls.sql
-```
+<pre>
+> wget -q --no-clobber \ 
+  https://s3-us-west-1.amazonaws.com/recordservice-vm/tpch.tar.gz 
+> tar -xzf tpch.tar.gz
+> hadoop fs -mkdir -p /test-warehouse/tpch.nation
+> hadoop fs -put -f tpch/nation/* /test-warehouse/tpch.nation/ 
+> impala-shell -f create-tbls.sql
+</pre>
 
 See  [https://github.com/cloudera/RecordServiceClient/blob/master/tests/create-tbls.sql](https://github.com/cloudera/RecordServiceClient/blob/master/tests/create-tbls.sql).
 
 <li>Run a MapReduce job for RecordCount on tpch.nation:</li>
 
-```
+<pre>
 > hadoop jar /path/to/recordservice-examples-0.1.jar \
-com.cloudera.recordservice.examples.mapreduce.RecordCount \
-"SELECT * FROM tpch.nation" "/tmp/recordcount_output"
-```
+  com.cloudera.recordservice.examples.mapreduce.RecordCount \
+  "SELECT * FROM tpch.nation" "/tmp/recordcount_output"
+</pre>
 
 <li>Start spark-shell with the RecordService JAR:</li>
 
-```
+<pre>
 > path/to/spark/bin/spark-shell \
---conf spark.recordservice.planner.hostports=planner_host:planner_port \
---jars /path/to/recordservice-examples-spark-0.1.jar
+  --conf spark.recordservice.planner.hostports=planner_host:planner_port \
+  --jars /path/to/recordservice-examples-spark-0.1.jar
 > scala> import com.cloudera.recordservice.spark._
-import com.cloudera.recordservice.spark._
-> scala> val data = sc.recordServiceRecords("select * from tpch.nation")
-data: org.apache.spark.rdd.RDD[Array[org.apache.hadoop.io.Writable]] = \ RecordServiceRDD[0] at RDD at RecordServiceRDDBase.scala:57
+  import com.cloudera.recordservice.spark._
+> scala> val data = sc.recordServiceRecords("select * from tpch.nation") \
+  data: org.apache.spark.rdd.RDD[Array[org.apache.hadoop.io.Writable]] = \
+  RecordServiceRDD[0] at RDD at RecordServiceRDDBase.scala:57
 > scala> data.count()
 res0: Long = 25
-```
+</pre>
 
 See [{{site.examplesSparkUrl}}]({{site.examplesSparkUrl}})
 
