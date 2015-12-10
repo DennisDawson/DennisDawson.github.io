@@ -55,8 +55,6 @@ See [http://www.cloudera.com/content/cloudera/en/documentation/core/latest/topic
 Follow these steps to install the RecordService Parcel.
 
 1. Go to `http://{cm-server}:7180/cmf/parcel/status`.
-1. Click **Edit Settings**.
-1. Add the RecordService repository url `http://archive.cloudera.com/beta/recordservice/parcels/latest` to **Remote Parcel Repository URLs**.
 1. Open the Cloudera Manager **Parcel** status page, `http://{cm-server}:7180/cmf/parcel/status`. If there is no RecordService parcel listed on the status page, click **Edit Settings** and add the RecordService repository URL `http://archive.cloudera.com/beta/recordservice/parcels/latest` to **Remote Parcel Repository URLs**.
 1. **Download** the RecordService parcel.
 1. **Distribute** the parcel.
