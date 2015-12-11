@@ -120,7 +120,7 @@ See [http://www.cloudera.com/content/cloudera/en/documentation/core/latest/topic
 
 You can verify the RecordService server installation by running examples from the client JAR.
 
-1. Download the client library and example tarball. [http://archive.cloudera.com/beta/recordservice/client-dist/recordservice-client-0.2.0-bin.tar.gz](http://archive.cloudera.com/beta/recordservice/client-dist/recordservice-client-0.2.0-bin.tar.gz)
+1. Download the client library and example tarball. [http://archive.cloudera.com/beta/recordservice/client-dist/recordservice-client-0.2.0-cdh5.5.x-bin.tar.gz](http://archive.cloudera.com/beta/recordservice/client-dist/recordservice-client-0.2.0-cdh5.5.x-bin.tar.gz)
     * You can also build the client library yourself from the client repository. [https://github.com/cloudera/RecordServiceClient](https://github.com/cloudera/RecordServiceClient).
     * Client libraries are also available directly from the Cloudera public Maven repository.
 1. To verify the server installation, run client examples in your clusters.
@@ -141,7 +141,7 @@ See  [https://github.com/cloudera/RecordServiceClient/blob/master/tests/create-t
 <li>Run a MapReduce job for RecordCount on tpch.nation:</li>
 
 <pre>
-> hadoop jar /path/to/recordservice-examples-0.2.0.jar \
+> hadoop jar /path/to/recordservice-examples-0.2.0-cdh5.5.x.jar \
   com.cloudera.recordservice.examples.mapreduce.RecordCount \
   "SELECT * FROM tpch.nation" "/tmp/recordcount_output"
 </pre>
@@ -151,7 +151,7 @@ See  [https://github.com/cloudera/RecordServiceClient/blob/master/tests/create-t
 <pre>
 > path/to/spark/bin/spark-shell \
   --conf spark.recordservice.planner.hostports=planner_host:planner_port \
-  --jars /path/to/recordservice-examples-spark-0.2.0.jar
+  --jars /path/to/recordservice-spark-0.2.0-cdh5.5.x.jar
 > scala> import com.cloudera.recordservice.spark._
   import com.cloudera.recordservice.spark._
 > scala> val data = sc.recordServiceRecords("select * from tpch.nation") \
