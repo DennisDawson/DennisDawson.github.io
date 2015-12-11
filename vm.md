@@ -93,7 +93,7 @@ sudo service sentry-store restart
 * Currently, you have access to the entire table. Use Impala to select all records from the `rs.employees` table:
 
 <pre>
-$ sudo -u $USER impala-shell
+$ impala-shell
 [quickstart.cloudera:21000] > use rs;
 Query: use rs
 [quickstart.cloudera:21000] > select * from rs.employees;
