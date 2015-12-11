@@ -12,8 +12,6 @@ RecordService beta must be installed only on a test cluster, because it is beta 
 <h3 align="center"><a href="vm.html">Using the Beta VM</a></h3>
 <p>
 The RecordService beta VM provides a single-node Hadoop cluster, including Impala, MapReduce/YARN, Spark, Sentry, and RecordService.  Using the VM is the easiest way to see RecordService in action, and it does not require that you  use an existing Hadoop cluster.
-</p><p>
-The VM itself does not contain RecordService Client and examples: those should be run on a separate machine.
 </p>
 <p>
 See <a href="vm.html">Download and Install the RecordService VM</a>
