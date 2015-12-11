@@ -89,11 +89,6 @@ To assign access with column-level restrictions, you create a role, assign the r
 ```
 sudo service sentry-store restart
 ```
-* Create a group named _demogroup_:
-`sudo groupadd demogroup`
-
-* Add the current user to the group:
-`sudo usermod -a -G demogroup $USER`
 
 * Currently, you have access to the entire table. Use Impala to select all records from the `rs.employees` table:
 
@@ -177,7 +172,7 @@ Fetched 0 row(s) in 0.11s
 
 * Exit Impala.
 
-* From the home directory, execute the following command. This is a trivial example class that counts the number of records in the table. Since the command specifies the <i>salary</i> column, to which the $USER (cloudera) does not have access, the command fails.
+* From the home directory, execute the following command. This is a trivial example class that counts the number of records in the table. Since the command specifies the <i>salary</i> column, to which the <i>demouser</i> does not have access, the command fails.
 
 <pre>
 [cloudera@quickstart ~]$ hadoop jar \
@@ -196,7 +191,7 @@ RecordServiceException: TRecordServiceException(code:INVALID_REQUEST, message:Co
 * Now run the same command, but specify the `firstname`, `lastname`, and `phonenumber` columns.
 
 <pre>
-[cloudera@quickstart ~]$ hadoop jar \
+[cloudera@quickstart ~]$ sudo su demouser hadoop jar \
 ./recordservice-client-0.2.0-cdh5.5.x/lib/recordservice-examples-0.2.0-cdh5.5.x.jar \
 com.cloudera.recordservice.examples.mapreduce.RecordCount \
 "select firstname, lastname, phonenumber from rs.employees" \
@@ -236,7 +231,7 @@ Query: grant select on table rs.no_police to role demorole
 * Run a query against the rs.no_police view.
 
 <pre>
-[cloudera@quickstart ~]$ hadoop jar \
+[cloudera@quickstart ~]$ sudo su demouser hadoop jar \
 ./recordservice-client-0.2.0-cdh5.5.x/lib/recordservice-examples-0.2.0-cdh5.5.x.jar \
 com.cloudera.recordservice.examples.mapreduce.RecordCount \
 "select firstname, lastname, phonenumber from rs.no_police" \
