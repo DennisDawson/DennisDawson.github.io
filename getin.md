@@ -23,7 +23,7 @@ You are welcome to comment and contribute to the RecordService project in any of
 [http://cloudera.github.io/RecordServiceClient/](http://cloudera.github.io/RecordServiceClient/)
 
 ## Bug Reporting 
-Open Github issue.
+Open Github issue at [https://issues.cloudera.org/projects/RS](https://issues.cloudera.org/projects/RS).
 
 ## Server Implementation
 
