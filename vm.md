@@ -250,6 +250,7 @@ hadoop fs -cat /tmp/count_no_police_output/part-r-00000
 
 The result returned is a row count of 38.
 
+Additional examples are described in the [examples]({{site.baseurl}}/examples.html) topic.
 
 ## Troubleshooting the VM Configuration
 
