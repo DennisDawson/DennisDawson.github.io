@@ -1,5 +1,5 @@
 ---
-layout: article
+layout: archive
 title: 'Getting Started with RecordService Beta'
 share: false
 ---
