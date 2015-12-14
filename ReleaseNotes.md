@@ -157,7 +157,3 @@ In Cloudera Manager, open the HDFS configuration page and search for _shortcircu
 ### Application Integration Limitations
 
 * Spark DataFrame is not well tested.
-
-
-[overview]: {{site.baseurl}}/
-
