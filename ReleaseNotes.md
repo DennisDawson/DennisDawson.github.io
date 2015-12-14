@@ -78,7 +78,7 @@ RecordService does not support the following data types:
 
 ## Known Issues
 
-###  Saving machine state and restarting the VM can result in no registered workers
+**Saving machine state and restarting the VM can result in no registered workers**
 
 After restarting the VM from a saved state, you might receive the following message when attempting to run RecordService applications.
 
@@ -91,18 +91,19 @@ empty. Please ensure all RecordService Worker nodes are running.
 
 You can verify that the membership is 0 by looking at `http://quickstart.cloudera:11050/membership`.
 
-#### Workaround 
+**Workaround**
+
 Restart RecordService by running the following command on the VM: 
 
 ```
 sudo service recordservice-server restart
 ```
 
-### RecordService client configurations are not properly propagated to Spark jobs
+**RecordService client configurations are not properly propagated to Spark jobs**
 
 RecordService configuration options are not propagated to Spark jobs using the RecordService custom service descriptor (CSD). All configuration options must be specified in the job or through Cloudera Manager safety valves for Spark.
 
-#### Workaround:
+**Workaround**
 
 * Apply configuration options using the Spark configuration safety valve: 
     **Spark** -> **Configuration** -> **Spark (Standalone) Client Advanced Configuration Snippet (Safety Valve) for spark-conf/spark-defaults.con**
@@ -119,41 +120,42 @@ spark.recordservice.kerberos.principal=<Kerberos principal>
 
 * Save changes and deploy the client configuration.
 
-### digest-md5 library not installed on cluster, breaking delegation tokens
+**digest-md5 library not installed on cluster, breaking delegation tokens**
 
 The digest-md5 library is not installed by default in parcel deployments.
 
-#### Workaround
+**Workaround**
+
 To install the library on RHEL 6, use the following command-line instruction:
 
 ```
 sudo yum install cyrus-sasl-md5
 ```
 
-### Short circuit reads not enabled
+**Short circuit reads not enabled**
 
-#### Workaround
+**Workaround**
 
 In Cloudera Manager, open the HDFS configuration page and search for _shortcircuit_. There are two configurations named **Enable HDFS Short Circuit Read**. One defaults to _true_ and one to _false_. Set both values to _true_.
 
 ## Limitations
 
-### Security Limitations
+**Security Limitations**
 
 * RecordService only supports simple single-table views (no joins or aggregations).
 * SSL support has not been tested.
 * Oozie integration has not been tested.
 
-### Storage/File Format Limitations
+**Storage/File Format Limitations**
 
 * No support for write path.
 * Unable to read from Kudu or HBase.
 
-### Operation and Administration Limitations
+**Operation and Administration Limitations**
 
 * No diagnostic bundle support.
 * No metrics available in Cloudera Manager.
 
-### Application Integration Limitations
+**Application Integration Limitations**
 
 * Spark DataFrame is not well tested.
