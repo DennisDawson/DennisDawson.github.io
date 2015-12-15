@@ -8,7 +8,8 @@ You are welcome to comment and contribute to the RecordService project in any of
 
 ## Mailing list
 
-[recordservice-user@googlegroups.com](https://groups.google.com/forum/#!forum/recordservice-user)
+If you have questions, comments, reflections, inspirations, suggestions, or need help getting started, please contact the RecordService team via our mailing list. We want to hear from you!
+ [recordservice-user@googlegroups.com](https://groups.google.com/forum/#!forum/recordservice-user)
 
 ## Discussion forum
 
