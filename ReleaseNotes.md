@@ -3,6 +3,7 @@ layout: article
 title: 'RecordService Beta 0.2.0 Release Notes'
 share: false
 ---
+This is the documentation for RecordService Beta 0.2.0. For RecordService Beta 0.1.0 documentation, see [RecordService_0.1.0.pdf]({{site.baseurl}}/RecordSErvice_0.1.0.pdf).
 
 This release of RecordService is a public beta and should not be run on production clusters. During the public beta period, RecordService is supported through the mailing list <a href="mailto:RecordService-user@googlegroups.com">RecordService-user@googlegroups.com</a>, not through the Cloudera Support Portal.
 
