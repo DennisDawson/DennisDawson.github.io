@@ -27,6 +27,8 @@ As you use RecordService during the public beta period, keep in mind the followi
 * CSD user experience improvements for Spark and Sentry configuration.
 * Performance improvements for loading metadata.
 
+<hr />
+
 ## Notable Bug Fixes in RecordService Beta 0.2.0
 * Fix support for multiple planners with path requests.
 * Path requests do not contain the connected user in some cases, causing requests to fail with authorization errors.
