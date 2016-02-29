@@ -1,7 +1,6 @@
 ---
 layout: article
-title: 'Download and Install the RecordService VM'
-share: false
+title: 'Using the RecordService VM'
 ---
 
 {% include toc.html %}

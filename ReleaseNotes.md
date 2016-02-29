@@ -27,8 +27,6 @@ As you use RecordService during the public beta period, keep in mind the followi
 * CSD user experience improvements for Spark and Sentry configuration.
 * Performance improvements for loading metadata.
 
-<hr />
-
 ## Notable Bug Fixes in RecordService Beta 0.2.0
 * Fix support for multiple planners with path requests.
 * Path requests do not contain the connected user in some cases, causing requests to fail with authorization errors.
@@ -45,7 +43,7 @@ RecordService VM requires VirtualBox version 4.3 or 5. You can download a free c
 
 RecordService supports the following software and hardware configurations when running on your own Hadoop cluster:
 
-* CDH 5.4
+* CDH 5.4 and higher
 * Server support: RHEL5 and RHEL6, Ubuntu LTS, SLES, and Debian
 * Intel Nehalem (or later) or AMD  Bulldozer (or later) processor
 * 64 GB memory
