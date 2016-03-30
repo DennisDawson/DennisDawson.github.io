@@ -76,6 +76,89 @@ Note: This might need to be adjusted according to the type of workloads (MR, Spa
 
 The properties listed on the Cloudera Manager RecordService Configuration page are the ones Cloudera considers the most reasonable to change. However, adjusting these values should not be necessary. Very advanced administrators might consider making minor adjustments.
 
+### Dynamic Fetch Size Adjustment
+
+The following properties allow you to tune dynamic fetch size adjustment on the server. 
+
+<table border="1">
+<tr><th>CATEGORY</th><th>PARAMETER</th><th>DESCRIPTION</th><th> DEFAULT VALUE </th></tr>
+<tr align="left">
+<td style="vertical-align:top">
+Resource Management
+</td>
+<td style="vertical-align:top">
+rs_compressed_max_fetch_size
+</td>
+<td style="vertical-align:top">
+Maximum fetch size when scanning compressed text files.
+</td>
+<td style="vertical-align:top">
+1000
+</td>
+</tr>
+
+<tr align="left">
+<td style="vertical-align:top">
+Resource Management
+</td>
+<td style="vertical-align:top">
+rs_fetch_size_decrease_factor
+</td>
+<td style="vertical-align:top">
+Correction factor to decrease fetch size; must be >= 1.
+</td>
+<td style="vertical-align:top">
+1.5
+</td>
+</tr>
+
+<tr align="left">
+<td style="vertical-align:top">
+Resource Management
+</td>
+<td style="vertical-align:top">
+rs_fetch_size_increase_factor
+</td>
+<td style="vertical-align:top">
+Correction factor to increase fetch size; must be > 0 and <= 1.
+</td>
+<td style="vertical-align:top">
+0.001
+</td>
+</tr>
+
+<tr align="left">
+<td style="vertical-align:top">
+Resource Management
+</td>
+<td style="vertical-align:top">
+rs_min_fetch_size
+</td>
+<td style="vertical-align:top">
+The minimum fetch size for the scanner thread.
+</td>
+<td style="vertical-align:top">
+500
+</td>
+</tr>
+
+<tr align="left">
+<td style="vertical-align:top">
+Resource Management
+</td>
+<td style="vertical-align:top">
+rs_spare_capacity_correction_factor
+</td>
+<td style="vertical-align:top">
+Correction factor for spare capacity; must be > 0 and <= 1. 
+</td>
+<td style="vertical-align:top">
+0.8
+</td>
+</tr>
+
+</table>
+
 ### Kerberos Configuration
 
 No special configuration is required via Cloudera Manager. Enabling Kerberos on the cluster configures everything.

@@ -27,10 +27,9 @@ As you use RecordService during the public beta period, keep in mind the followi
 
 ### New Features in RecordService Beta 0.3.0
 
-* Planner Auto Discovery
-You can now use the recordservice.zookeeper.connectString property to specify planner/worker membership and other information. See [Configuring RecordService: Planner Auto Discovery Configuration]({{site.baseurl}}/rsConfig/#planner-auto-discovery-configuration)
+* **Planner Auto Discovery**: You can now use the recordservice.zookeeper.connectString property to specify planner/worker membership and other information. See [Configuring RecordService: Planner Auto Discovery Configuration]({{site.baseurl}}/rsConfig/#planner-auto-discovery-configuration)
 
-* dynamic adjust fetch size
+* **Dynamic Fetch Size Adjustment**: RecordService can now automatically adjust fetch size according to available capacity and workloads on the RecordServiceWorker. This allows for optimal memory management. This helps multi-tenancy workloads to succeed when resources are under contention. RecordService can scale performance up or down based on resource availability. Further tuning is available through use of the new properties `rs_adjust_fetch_size`, `rs_compressed_max_fetch_size`, `rs_compressed_max_fetch_size`, `rs_fetch_size_increase_factor`, `rs_min_fetch_size`, and `rs_spare_capacity_correction_factor`. See [Configuring RecordService]({{site.baseurl}}/rsConfig).
 
 ### New Features in RecordService Beta 0.2.0
 
