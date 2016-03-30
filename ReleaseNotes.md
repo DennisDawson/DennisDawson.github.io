@@ -28,8 +28,9 @@ As you use RecordService during the public beta period, keep in mind the followi
 ### New Features in RecordService Beta 0.3.0
 
 * Planner Auto Discovery
+You can now use the recordservice.zookeeper.connectString property to specify planner/worker membership and other information. See [Configuring RecordService: Planner Auto Discovery Configuration]({{site.baseurl}}/rsConfig/#planner-auto-discovery-configuration)
 
-You can now use the recordservice.zookeeper.connectString property to specify planner/worker membership and other information. See 
+* dynamic adjust fetch size
 
 ### New Features in RecordService Beta 0.2.0
 
