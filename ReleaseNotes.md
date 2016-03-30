@@ -43,10 +43,10 @@ You can now use the recordservice.zookeeper.connectString property to specify pl
 ## Fixed Issues
 
 ### Issues Fixed in RecordService Beta 0.3.0
-* Short circuit reads not enabled
-Bug: [RS-114](https://issues.cloudera.org/browse/RS-114)
-Short circuit reads are enabled by default in RecordService 0.3.0.
 
+* Short circuit reads not enabled 
+    * **Bug:** [RS-114](https://issues.cloudera.org/browse/RS-114)
+    * Short circuit reads are enabled by default in RecordService 0.3.0.
 
 ### Issues Fixed in RecordService Beta 0.2.0
 * Fix support for multiple planners with path requests.
