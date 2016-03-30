@@ -39,3 +39,43 @@ The following examples can be found at [https://github.com/cloudera/RecordServic
 | How to use RecordService with Spark shell | Examples of using spark-shell to interact with RecordService in a variety of ways.|
 | Reading Data from a View and Enforcing Sentry Permissions | This example demonstrates how an MR job may now read data even when the user only has permission to see part of the data in a file (table). See [ReadMe.md](https://github.com/cloudera/RecordServiceClient/blob/master/java/examples-spark/README.md#how-to-enforce-sentry-permissions-with-spark) |
 
+## Using HCatalog and Pig with RecordService
+
+RecordService supports applications that use HCatalog and Pig. The supporting source code is available on [GitHub](http://github.mtv.cloudera.com/CDH/RecordServiceClient/tree/master/java/hcatalog-pig-adapter).
+
+For example, consider the following script in Pig:
+
+```bash
+A = LOAD 'tpch.nation' USING org.apache.hive.hcatalog.pig.HCatLoader();
+DUMP A;
+```
+
+To enable RecordService, you add a few lines in the script:
+
+```bash
+register /path/to/recordservice-hcatalog-pig-adapter-${version}-jar-with-dependencies.jar
+set recordservice.planner.hostports <planner-hostports>
+A = LOAD 'tpch.nation' USING com.cloudera.recordservice.pig.HCatRSLoader();
+DUMP A;
+```
+
+Note the changes:
+
+1. Register the JAR file that contains all the classes required to use HCatalog/Pig with RecordService, including the `HCatRSLoader` class.
+1. Specify the address for RecordService planners by setting the `recordservice.planner.hostports` property or by setting the
+   `recordservice.zookeeper.connectString` to use the planner auto discovery feature.
+1. Replace `HCatLoader` with the `HCatRSLoader`.
+
+Specify any additional RecordService properties using the `set` command.
+
+RecordService also supports column projection:
+
+```bash
+register /path/to/recordservice-hcatalog-pig-adapter-${version}-jar-with-dependencies.jar
+set recordservice.planner.hostports <planner-hostports>
+A = LOAD 'select n_nationkey, n_name from tpch.nation' USING com.cloudera.recordservice.pig.HCatRSLoader();
+DUMP A;
+```
+
+This selects only the columns `n_nationkey` and `n_name` from the `tpch.nation` table.
+As with MapReduce or Spark, you can enforce restrictions on data access using Sentry privileges, which also apply to the HCatalog and Pig jobs.
