@@ -31,6 +31,8 @@ As you use RecordService during the public beta period, keep in mind the followi
 
 * **Dynamic Fetch Size Adjustment**: RecordService can now automatically adjust fetch size according to available capacity and workloads on the RecordServiceWorker. This allows for optimal memory management. This helps multi-tenancy workloads to succeed when resources are under contention. RecordService can scale performance up or down based on resource availability. Further tuning is available through use of the new properties `rs_adjust_fetch_size`, `rs_compressed_max_fetch_size`, `rs_compressed_max_fetch_size`, `rs_fetch_size_increase_factor`, `rs_min_fetch_size`, and `rs_spare_capacity_correction_factor`. See [Configuring RecordService]({{site.baseurl}}/rsConfig/#dynamic-fetch-size-adjustment).
 
+* **CSD User Experience Improvements for Sentry Configuration**: The name of the Sentry configuration field has change from *Configuration Snippet (Safety Valve) for sentry-site.xml* to *Sentry Advanced Configuration Snippet (Safety Valve)*. See [Sentry Table Configuration]({{site.baseurl}}/rsConfig/#sentry-table-configuration).
+
 ### New Features in RecordService Beta 0.2.0
 
 * Support for CDH5.5, including:
@@ -103,7 +105,7 @@ RecordService does not support the following data types:
 
 Bug: [RS-121](https://issues.cloudera.org/browse/RS-121).
 
-Due to security improvements in Beta 0.3.0, you must delete existing ZooKeeper znodes when you stop RecordService.
+To take advantage of security improvements in Beta 0.3.0, Cloudera recommends that you delete existing ZooKeeper znodes when you stop RecordService.
 
 **Workaround**
 
@@ -138,7 +140,7 @@ zookeeper-client -server <i>leader-node-hostname</i>
 </li>
 <li>
 In ZooKeeper console, delete the old ZooKeeper nodes
-<i>rmr/recordservice</i>.
+<i>rmr /recordservice</i>.
 The user who launches the ZooKeeper client must have the right permissions to  <i>jaas.conf</i> and <i>keytab</i>.
 </li>
 </ol>
@@ -184,6 +186,11 @@ spark.recordservice.kerberos.principal=<Kerberos principal>
 ```
 
 * Save changes and deploy the client configuration.
+
+A properties file is generated in `/etc/recordservice/conf`. 
+When you run a Spark job, add the following instruction to your command: 
+
+`--properties-file=/etc/recordservice/conf/spark.conf`
 
 **digest-md5 library not installed on cluster, breaking delegation tokens**
 

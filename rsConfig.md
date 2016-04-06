@@ -237,13 +237,13 @@ RecordService persists state in Zookeeper, by default, under the /recordservice 
 ### Planner Auto Discovery Configuration
 
 RecordService 0.3.0 and higher includes the Planner Auto Discovery feature. 
-You no longer need to specify a list of planner host/ports for your RecordService clients through the configuration property *recordservice.planner.hostports*. Instead, you can use the property *recordservice.zookeeper.connectString*, which specifies the connection string to the ZooKeeper session used to keep store information about planner/worker membership (as well as other information, such as delegation tokens). Both the client and the server use this property.
+You no longer need to specify a list of planner host/ports for your RecordService clients through the configuration property `recordservice.planner.hostports`. Instead, you can use the property `recordservice.zookeeper.connectString`, which specifies the connection string to the ZooKeeper session used to keep store information about planner/worker membership (as well as other information, such as delegation tokens). Both the client and the server use this property.
 
 Planner Auto Discovery allows client side applications independent of changes in the planner configuration. Planners might come and go in the cluster, but the client side application uses the same configuration settings.
 
 If you use Cloudera Manager to manage the cluster, this property is automatically populated to the client side configurations through the CSD.
 
-Setting the property enables Planner Auto Discovery. A RecordService job first contacts ZooKeeper to fetch a list of available RecordService planners, then uses those resources for planning. If this step fails, the job reads *recordservice.planner.hostports* and uses static membership information.
+Setting the property enables Planner Auto Discovery. A RecordService job first contacts ZooKeeper to fetch a list of available RecordService planners, then uses those resources for planning. If this step fails, the job reads `recordservice.planner.hostports` and uses static membership information.
 
 Additional properties provide tuning options.
 
