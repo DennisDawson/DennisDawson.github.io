@@ -33,9 +33,11 @@ As you use RecordService during the public beta period, keep in mind the followi
 
 * **CSD User Experience Improvements for Sentry Configuration**: The name of the Sentry configuration field has change from *Configuration Snippet (Safety Valve) for sentry-site.xml* to *Sentry Advanced Configuration Snippet (Safety Valve)*. See [Sentry Table Configuration]({{site.baseurl}}/rsConfig/#sentry-table-configuration).
 
+* **HCatalog Support**: RecordService supports the use of HCatalog and Pig. See [Using HCatalog and Pig with RecordService]({{site.baseurl}}/examples/#using-hcatalog-and-pig-with-recordservice).
+
 ### New Features in RecordService Beta 0.2.0
 
-* Support for CDH5.5, including:
+* Support for CDH 5.5, including:
     * Sentry Column-Level Authorization.
     * Spark 1.5.
 * CSD user experience improvements for Spark and Sentry configuration.
